@@ -31,4 +31,8 @@ public class BirdScript : MonoBehaviour
         logic.gameOver();
         birdIsAlive = false;
     }
+
+    public bool checkIfBirdAlive() {
+        return birdIsAlive;
+    }
 }
