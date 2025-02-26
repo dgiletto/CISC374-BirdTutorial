@@ -10,9 +10,12 @@ public class LogicScript : MonoBehaviour
     public Text scoreText;
     public Text highScoreText;
     public GameObject gameOverScreen;
+    public AudioSource popSFX;
+    public AudioSource gameOverSFX;
 
     void Start()
     {
+        // Gets highscore which is stored in PlayerPrefs
         highPlayerScore = PlayerPrefs.GetInt("HighScore", 0);
     }
 
@@ -20,6 +23,8 @@ public class LogicScript : MonoBehaviour
     public void addScore(int scoreToAdd) {
         playerScore += scoreToAdd;
         scoreText.text = playerScore.ToString();
+        // Bubble pop sound effect for getting a point
+        popSFX.Play();
     }
 
     public void restartGame() {
@@ -28,14 +33,17 @@ public class LogicScript : MonoBehaviour
 
     public void gameOver() {
         gameOverScreen.SetActive(true);
+        gameOverSFX.Play();
     }
 
     public void UpdateHighScore() {
+        // Change high score is player score is larger
         if (playerScore > highPlayerScore) {
             highPlayerScore = playerScore;
             PlayerPrefs.SetInt("HighScore", highPlayerScore);
         }
 
+        // Update high score text to reflect any changes in high score
         highScoreText.text = highPlayerScore.ToString();
     }
 }
