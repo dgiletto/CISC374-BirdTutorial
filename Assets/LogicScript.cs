@@ -10,6 +10,7 @@ public class LogicScript : MonoBehaviour
     public Text scoreText;
     public Text highScoreText;
     public GameObject gameOverScreen;
+    public GameObject titleScreen;
     public AudioSource popSFX;
     public AudioSource gameOverSFX;
 
@@ -17,6 +18,9 @@ public class LogicScript : MonoBehaviour
     {
         // Gets highscore which is stored in PlayerPrefs
         highPlayerScore = PlayerPrefs.GetInt("HighScore", 0);
+        // Show the title screen and freeze the game behind it
+        titleScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 
     [ContextMenu("Increase Score")]
@@ -29,6 +33,12 @@ public class LogicScript : MonoBehaviour
 
     public void restartGame() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void startGame() {
+        // Hide the title screen and unfreeze the game
+        titleScreen.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void gameOver() {
