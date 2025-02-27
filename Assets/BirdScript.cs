@@ -8,6 +8,7 @@ public class BirdScript : MonoBehaviour
     public bool birdIsAlive = true;
     public AudioSource flapSFX;
     public ParticleSystem deathParticles;
+    public ParticleSystem dust;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +21,7 @@ public class BirdScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && birdIsAlive) {
             myRigidbody.linearVelocity = Vector2.up * flapStrength;
+            CreateDust();
             flapSFX.Play();
         }
 
@@ -45,5 +47,10 @@ public class BirdScript : MonoBehaviour
         Instantiate(deathParticles, transform.position, transform.rotation);
         Destroy(gameObject);
         birdIsAlive = false;
+    }
+
+    // Function to emit dust effect
+    public void CreateDust() {
+        dust.Play();
     }
 }
