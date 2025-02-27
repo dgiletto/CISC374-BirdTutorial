@@ -7,6 +7,7 @@ public class BirdScript : MonoBehaviour
     public LogicScript logic;
     public bool birdIsAlive = true;
     public AudioSource flapSFX;
+    public ParticleSystem deathParticles;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,20 +25,25 @@ public class BirdScript : MonoBehaviour
 
         if (transform.position.y > 10 || transform.position.y < -10 ) {
             logic.gameOver();
-            Destroy(gameObject);
-            birdIsAlive = false;
+            Death();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         logic.gameOver();
-        Destroy(gameObject);
-        birdIsAlive = false;
+        Death();
     }
 
     // Simple function call which returns if the bird is still alive
     public bool checkIfBirdAlive() {
         return birdIsAlive;
+    }
+
+    // Function used to kill bird
+    public void Death() {
+        Instantiate(deathParticles, transform.position, transform.rotation);
+        Destroy(gameObject);
+        birdIsAlive = false;
     }
 }
